@@ -22,9 +22,9 @@ http://www.thingiverse.com/thing:1603
 There's a great blog describing how to wire up the 5940 breakout boards to your Arduino:
 http://bildr.org/2012/03/servos-tlc5940-arduino/
 
-# Images
-![Hexapod](http://distilleryimage7.s3.amazonaws.com/5c836f548bb511e2ba9922000a1f9c9a_7.jpg)
-
 # Video
 * 16 Servo test - http://vimeo.com/44910188
 * First hexapod movement - https://www.youtube.com/watch?v=qvH-6LmL3OA
+
+# Images
+![Hexapod](http://distilleryimage7.s3.amazonaws.com/5c836f548bb511e2ba9922000a1f9c9a_7.jpg)
