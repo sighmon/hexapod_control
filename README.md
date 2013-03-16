@@ -1,7 +1,7 @@
 # Hexapod Arduino Control
 Arduino Control code for a DIY laser cut hexapod.
 
-This is a work in progress, with help from Jonathan & [Pix](thapixguy@gmail.com).
+This is a work in progress, with help from Jonathan & [Pix](mailto:thapixguy@gmail.com).
 
 ## Hardware
 * Arduino Duemilanove - http://arduino.cc/en/Main/ArduinoBoardDuemilanove
