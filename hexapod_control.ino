@@ -62,7 +62,8 @@ void setLegSegmentPosition(int pair, int hand, int segment, int angle) {
   if (segment == MIDDLE) {
     servoPos = (180 - servoPos);
   }
-  if ((pair != MIDDLE) && (hand == RIGHT) && (segment == INNER)) {
+  if ((pair != MIDDLE) && (hand == LEFT) && (segment == INNER)) {
+    // invert the left side so that it walks forward
     servoPos = (180 - servoPos);
   }
   tlc_setServo(servo, servoPos);
@@ -182,41 +183,29 @@ void walkPose(int set, int rotation, int height) {
 
 // Walk animation
 
-// TODO: FIX (add) ANIMATION STEP
-
 void walkAnimation() {
-  walkPose(1, 120, 0);
+
+  walkPose(0, 90, 90);
+  Tlc.update();
+  delay(1000);
   walkPose(0, 60, 90);
   Tlc.update();
   delay(1000);
-  walkPose(0, 120, 90);
+  walkPose(0, 60, 0);
   Tlc.update();
   delay(1000);
   walkPose(0, 120, 0);
   Tlc.update();
   delay(1000);
-  walkPose(1, 120, 90);
+  
+  // TOFIX: set 1 seems to be walking backwards given the same commands.
+  walkPose(1, 90, 90);
   Tlc.update();
   delay(1000);
   walkPose(1, 60, 90);
   Tlc.update();
   delay(1000);
   walkPose(1, 60, 0);
-  Tlc.update();
-  delay(1000);
-  walkPose(0, 60, 0);
-  Tlc.update();
-  delay(1000);
-  walkPose(0, 60, 90);
-  Tlc.update();
-  delay(1000);
-  walkPose(0, 120, 90);
-  Tlc.update();
-  delay(1000);
-  walkPose(1, 60, 90);
-  Tlc.update();
-  delay(1000);
-  walkPose(1, 120, 90);
   Tlc.update();
   delay(1000);
   walkPose(1, 120, 0);
@@ -226,13 +215,13 @@ void walkAnimation() {
 
 void loop(){
   neutralStance();
-  //Tlc.update();
-  // delay(1000);
+  Tlc.update();
+  delay(1000);
   //outerClench();
   //delay(1000);
   //neutralStance();
   //delay(1000);
-  //outerStretch();
+  //outerStretchAnimation();
   //middleAndOuterStretchAnimation();
   // innerForwardAnimation();
   walkAnimation();
