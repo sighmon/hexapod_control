@@ -18,6 +18,10 @@ int numberOfServos = 18; //how many servos on the chain?
 #define RIGHT 1
 
 void setup(){
+  // Initialize serial
+  Serial.begin(9600);
+  
+  // Initialise the servos
   tlc_initServos();  // Note: this will drop the PWM freqency down to 50Hz.
 }
 
@@ -64,6 +68,7 @@ void setLegSegmentPosition(int pair, int hand, int segment, int angle) {
   }
   if ((pair != MIDDLE) && (hand == LEFT) && (segment == INNER)) {
     // invert the left side so that it walks forward
+    // was (hand == RIGHT)
     servoPos = (180 - servoPos);
   }
   tlc_setServo(servo, servoPos);
@@ -175,9 +180,9 @@ void walkPose(int set, int rotation, int height) {
     setLegPosition(REAR, LEFT, rotation, middle, outer);
     setLegPosition(MIDDLE, RIGHT, (180 - rotation), middle, outer);
   } else if (set == 1) {
-    setLegPosition(FRONT, RIGHT, (180 - rotation), middle, outer);
-    setLegPosition(REAR, RIGHT, (180 - rotation), middle, outer);
-    setLegPosition(MIDDLE, LEFT, rotation, middle, outer);
+    setLegPosition(FRONT, RIGHT, rotation, middle, outer);
+    setLegPosition(REAR, RIGHT, rotation, middle, outer);
+    setLegPosition(MIDDLE, LEFT, (180 - rotation), middle, outer);
   }
 }
 
@@ -185,45 +190,68 @@ void walkPose(int set, int rotation, int height) {
 
 void walkAnimation() {
 
-  walkPose(0, 90, 90);
-  Tlc.update();
-  delay(1000);
+  // Start
+//  walkPose(0, 90, 0);
+//  walkPose(1, 90, 0);
+//  Tlc.update();
+//  delay(1000);
+  
+  // First set up and forwards
   walkPose(0, 60, 90);
   Tlc.update();
   delay(1000);
+  
+  // First set down
   walkPose(0, 60, 0);
   Tlc.update();
   delay(1000);
+  
+  // Second set up and forwards
+  walkPose(1, 60, 90);
+  Tlc.update();
+  delay(1000);
+
+  // First set back  
   walkPose(0, 120, 0);
   Tlc.update();
   delay(1000);
   
-  // TOFIX: set 1 seems to be walking backwards given the same commands.
-  walkPose(1, 90, 90);
-  Tlc.update();
-  delay(1000);
-  walkPose(1, 60, 90);
-  Tlc.update();
-  delay(1000);
+  // Second set down
   walkPose(1, 60, 0);
   Tlc.update();
   delay(1000);
+  
+  // First set up and forwards
+  walkPose(0, 60, 90);
+  Tlc.update();
+  delay(1000);
+  
+  // Second set back
   walkPose(1, 120, 0);
   Tlc.update();
   delay(1000);
 }
 
+boolean firstRun = true;
+
 void loop(){
-  neutralStance();
-  Tlc.update();
-  delay(1000);
+  
+  if (firstRun) {
+    neutralStance();
+    Tlc.update();
+    delay(1000);
+    firstRun = false;
+  }
+  //neutralStance();
+  //Tlc.update();
+  //delay(3000);
   //outerClench();
   //delay(1000);
   //neutralStance();
   //delay(1000);
   //outerStretchAnimation();
   //middleAndOuterStretchAnimation();
-  // innerForwardAnimation();
+  //innerForwardAnimation();
   walkAnimation();
   //delay(1000);
 }
